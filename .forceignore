@@ -1,0 +1,79 @@
+# .forceignore v2
+
+# List files or directories below to ignore them when running force:source:push, force:source:pull, and force:source:status
+# More information: https://developer.salesforce.com/docs/atlas.en-us.sfdx_dev.meta/sfdx_dev/sfdx_dev_exclude_source.htm
+#
+
+package.xml
+
+# MacOS system files
+.DS_Store
+https://github.com/samhowle/SamEx/blob/bb9aa6f9080038154432ddcd9879be0f8ffa93cf/.DS_Store
+
+# Release 2021-3Q-2 --> known issue causing deployment failure with certain global value set names being restricted; don't deploy the Country global value set until resolved
+# https://trailblazer.salesforce.com/issues_view?id=a1p3A0000008gHSQAY&title=certain-global-value-set-names-are-restricted
+**/globalValueSets/Country.globalValueSet-meta.xml
+
+# Ignore ObjectTranslations, which track Re-labeled Standard Fields / Tabs, and also foreign-language translation settings. Keep in source to track changes, but not deploy
+# **/objectTranslations/**
+
+# Adding Customer Communities
+**/experiences/**
+
+# Removing environment-specific files
+**/authproviders/**
+
+# Standard Objects to ignore in deployments - Only include those that have complicated deployment issues and/or are primarily used as a "setup" type of object
+**/objects/Asset
+
+# LWC configuration files
+**/jsconfig.json
+**/.eslintrc.json
+
+
+# Don't deploy connected apps since it will regenerate keys and break integrations
+**/connectedApps/**
+
+# ignore site settings
+**/sites/**
+
+# LWC Jest
+**/__tests__/**
+
+**/reports
+
+**/reportTypes
+
+**/dashboards
+
+**/settings
+
+**/appMenus
+
+**/listViews
+**/layouts/Task-Task Layout.layout-meta.xml
+**/layouts/Task-RFP Layout.layout-meta.xml
+**/layouts/Event-Event Layout.layout-meta.xml
+
+# Need to figure out how to exclude list views while retrieving an Object from an org
+# **.listView-meta.xml
+
+
+# Don't deploy Email quick actions; Will fail validation if Deliverability is not "All Email" (during deployment), which is more risk than necessary
+**/quickActions/Send_Email.quickAction-meta.xml
+**/quickActions/Account.Send_Email.quickAction-meta.xml
+**/quickActions/Lead.Email.quickAction-meta.xml
+
+# Don't deploy the Admin lightning home page (for Dev Team app) because the Scratch Org objects will cause validation errors in non-Dev Hub orgs
+**/flexipages/Admin_Home_Page.flexipage-meta.xml
+
+
+# TODO: decide if we should add this back to source. Has caused several deployment validation errors with entitlementProcess version conflicts, and other dependent metadata types
+# If not included in deployments, should still periodically retrieve Entitlement settings to keep that configuration backed up as it changes
+**/entitlementProcesses
+
+# Ignore EntitlementContact due to validation errors. Object is not being used, and seems like the error was introduced by the Summer 2022 release
+**/objects/EntitlementContact
+
+**/documents/Graphics_Pack_for_Formulas
+**/documents/Graphics_Pack_for_Tabs
